@@ -19,15 +19,17 @@ int perguntarTorreTirar()
     return op - 1;
 }
 
-bool ganhou(struct Pilha *torreB, struct Pilha *torreC){
+bool ganhou(struct Pilha *torreB, struct Pilha *torreC)
+{
 
     int capacidade = torreB->capacidade;
 
-    if(torreB->topo == capacidade - 1) return true;
-    if(torreC->topo == capacidade - 1) return true;
+    if (torreB->topo == capacidade - 1)
+        return true;
+    if (torreC->topo == capacidade - 1)
+        return true;
 
     return false;
-
 }
 
 /// Preencher pilha com os devidos "discos".
@@ -101,8 +103,8 @@ void main()
             contador++;
         }
 
-
-        if(ganhou(&torreB, &torreC)){
+        if (ganhou(&torreB, &torreC))
+        {
 
             int qtdMinima = pow(2, qtdDiscos) - 1;
 
