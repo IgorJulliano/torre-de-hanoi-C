@@ -7,14 +7,14 @@
 int perguntarTorreColocar()
 {
     int op;
-    printf("Em qual torre irá colocar -> ");
+    printf("Em qual torre ira colocar -> ");
     scanf("%d", &op);
     return op - 1;
 }
 int perguntarTorreTirar()
 {
     int op;
-    printf("De qual torre você irá retirar -> ");
+    printf("De qual torre voce ira retirar -> ");
     scanf("%d", &op);
     return op - 1;
 }
@@ -27,7 +27,7 @@ bool ganhou(struct Pilha *torreB, struct Pilha *torreC){
     if(torreC->topo == capacidade - 1) return true;
 
     return false;
-    
+
 }
 
 /// Preencher pilha com os devidos "discos".
@@ -62,7 +62,7 @@ void main()
     create(&torreA, qtdDiscos);
     create(&torreB, qtdDiscos);
     create(&torreC, qtdDiscos);
-    
+
     preencherPilha(&torreA);
 
     struct Pilha *vet[] = {&torreA, &torreB, &torreC};
@@ -96,7 +96,7 @@ void main()
                 selecao = perguntarTorreColocar();
                 torreSelecionada = vet[selecao];
             }
-            
+
             push(torreSelecionada, discoSendoMovimentado);
             contador++;
         }
@@ -106,10 +106,10 @@ void main()
 
             int qtdMinima = pow(2, qtdDiscos) - 1;
 
-            printf("\n---- PARABÉNS SEU MERDA, FINALMENTE. ----\n");
-            printf("A quantidade mínima de movimentos era %i!\n", qtdMinima);
-            printf("Vocẽ efetuou %i movimentos para finalizar!\n", contador);
-            
+            printf("\n---- PARABENS SEU MERDA, FINALMENTE. ----\n");
+            printf("A quantidade minima de movimentos era %i!\n", qtdMinima);
+            printf("Voce efetuou %i movimentos para finalizar!\n", contador);
+
             return;
         }
     }

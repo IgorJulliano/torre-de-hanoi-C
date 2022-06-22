@@ -8,10 +8,22 @@ struct Pilha {
 	int *pElem;
 };
 
+void reset(struct Pilha *p)
+{
+     p->topo -1
+    int tamanho = p->capacidade;
+
+    for (int i = 0; i < tamanho; i++)
+    {
+        p->pElem [i]=0;
+    }
+
+}
 void create( struct Pilha *p, int c ){
-   p->topo = -1;
+
    p->capacidade = c;
    p->pElem = (int*) malloc (c * sizeof(int));
+   reset(p);
 }
 
 bool isEmpty(struct Pilha *p){
