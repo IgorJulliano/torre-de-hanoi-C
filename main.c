@@ -1,25 +1,39 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
+
 #include "pilha.c"
 
 int perguntarTorreColocar()
 {
     int op;
     printf("Em qual torre irá colocar -> ");
-    scanf("%i", op);
+    scanf("%d", &op);
     return op - 1;
 }
 int perguntarTorreTirar()
 {
     int op;
     printf("De qual torre você irá retirar -> ");
-    scanf("%i", op);
+    scanf("%d", &op);
     return op - 1;
+}
+
+bool ganhou(struct Pilha *torreB, struct Pilha *torreC){
+
+    int capacidade = torreB->capacidade;
+
+    if(torreB->topo == capacidade - 1) return true;
+    if(torreC->topo == capacidade - 1) return true;
+
+    return false;
+    
 }
 
 /// Preencher pilha com os devidos "discos".
 /// O topo terá o menor número e o maior será a base
-void preencherPilha(struct Pilha *torre){
+void preencherPilha(struct Pilha *torre)
+{
     int tamanho = torre->capacidade;
 
     for (int i = 0; i < tamanho; i++)
@@ -41,11 +55,13 @@ void main()
     struct Pilha torreB;
     struct Pilha torreC;
 
-    int capacidade = 4;
+    int qtdDiscos;
+    printf("Insira o tamanho do pilha -> ");
+    scanf("%d", &qtdDiscos);
 
-    create(&torreA, capacidade);
-    create(&torreB, capacidade);
-    create(&torreC, capacidade);
+    create(&torreA, qtdDiscos);
+    create(&torreB, qtdDiscos);
+    create(&torreC, qtdDiscos);
     
     preencherPilha(&torreA);
 
@@ -53,7 +69,8 @@ void main()
 
     struct Pilha *torreSelecionada;
 
-    int selecao, auxiliar;
+    int selecao, discoSendoMovimentado;
+    int contador = 0;
 
     while (true)
     {
@@ -62,19 +79,38 @@ void main()
         show(&torreC);
 
         printf("\n");
-        selecao = perguntarTorreTirar();        // usuário escolhe entre 1, 2 ou 3, porem o retorno é subtraido em 1
-        torreSelecionada = vet[selecao];    // o erro acontece aqui, ao tentar acessar o endereço no vetor
+        selecao = perguntarTorreTirar();
+        torreSelecionada = vet[selecao];
 
         if (isEmpty(torreSelecionada))
             printf("\nTorre Vazia\n");
         else
         {
-            auxiliar = pop(torreSelecionada);
+            discoSendoMovimentado = pop(torreSelecionada);
 
             selecao = perguntarTorreColocar();
-            torreSelecionada = vet[selecao - 1];
+            torreSelecionada = vet[selecao];
 
-            push(torreSelecionada, auxiliar);
+            while (!isEmpty(torreSelecionada) && top(torreSelecionada) < discoSendoMovimentado)
+            {
+                selecao = perguntarTorreColocar();
+                torreSelecionada = vet[selecao];
+            }
+            
+            push(torreSelecionada, discoSendoMovimentado);
+            contador++;
+        }
+
+
+        if(ganhou(&torreB, &torreC)){
+
+            int qtdMinima = pow(2, qtdDiscos) - 1;
+
+            printf("\n---- PARABÉNS SEU MERDA, FINALMENTE. ----\n");
+            printf("A quantidade mínima de movimentos era %i!\n", qtdMinima);
+            printf("Vocẽ efetuou %i movimentos para finalizar!\n", contador);
+            
+            return;
         }
     }
 }
